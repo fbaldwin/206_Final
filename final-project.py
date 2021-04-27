@@ -23,25 +23,64 @@ def getMovieNames(year):
     soup = BeautifulSoup(r.text, 'html.parser')
     anchor = soup.find_all('p')
     x = []
-    reg = r'\b([a-zA-Z0-9\'\, ]+)\('
+    reg = r'\b([a-zA-Z0-9\'\,\.\&\:\-éá\/\! ]+)\('
     for i in anchor:
         try:
             orig = i.find('b').text
         except:
-            continue
             try:
                 orig = i.find('a').text
             except:
-                continue
+                try:
+                    orig = i.find('strong').text
+                except:
+                    continue
         y = re.findall(reg, orig)
         for j in y:
-            x.append(j[:-1])
+            st = j[:-1].strip()
+            x.append(st)
     tuple_lst = []
     for i in x:
         tuple_lst.append((year, i))
 
     return tuple_lst
 
+
+def createMoviesTable(cur, conn):
+    cur.execute("CREATE TABLE IF NOT EXISTS Movies (year INTEGER, title TEXT)")
+    for i in range(21):
+        year = 2000 + i
+        names = getMovieNames(year)
+        for j in range(len(names)):
+            print(names[j])
+            cur.execute("INSERT INTO Movies (year, title) VALUES (?,?)", (names[j][0], names[j][1]))
+    conn.commit()
+    pass
+
+
+def createIDTable(cur, conn):
+    cur.execute("DROP TABLE IF EXISTS IDs")
+    cur.execute("CREATE TABLE IF NOT EXISTS IDs (imdb_id TEXT PRIMARY KEY, title TEXT)")
+    years = [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020]
+    for k in years:
+        cur.execute("SELECT year, title FROM Movies WHERE year = ?", (k,))
+        movs = cur.fetchall()
+        print(movs)
+        id_lst = []
+        for i in movs:
+            year = i[0]
+            title = i[1]
+            imdb_id = getMovieID(title, year)
+            if len(id_lst) < 10:
+                if imdb_id != '' and imdb_id != "ignore":
+                    id_lst.append(imdb_id)
+                    print('adding ' + str(title))
+                    cur.execute("INSERT INTO IDs (imdb_id, title) VALUES (?,?)", (imdb_id, title))
+                else:
+                    print('Could not find ID for ' + str(title))
+    conn.commit()
+    
+    pass
 
 def getMovieID(title, year):
     url = "https://movies-tvshows-data-imdb.p.rapidapi.com/"
@@ -78,13 +117,11 @@ def getMovieData(imdb_id):
 
     response = requests.request("GET", url, headers=headers, params=querystring)
     results = json.loads(response.text)
-    year = int(results['year'])
-    title = results['title']
     genre = results['genres'][0]
     rating = float(results['imdb_rating'])
     popularity = float(results['popularity'])
 
-    return (imdb_id, year, title, genre, rating, popularity)
+    return (imdb_id, genre, rating, popularity)
 
 
 
@@ -92,25 +129,17 @@ def getMovieData(imdb_id):
 
 #call getMovieNames for each year dating back to 1919 to add all of the movie titles, years, genres, ratings, and popularity to the table movies
 
-def createMoviesTable(cur, conn):
-    cur.execute("DROP TABLE IF EXISTS Movies")
-    cur.execute("CREATE TABLE Movies (imdb_id TEXT PRIMARY KEY, year INTEGER, title TEXT, genre TEXT, rating REAL, popularity REAL)")
-    for i in range(20):
-        year = 2000 + i
-        names = getMovieNames(year)
-        print(names)
-        id_lst = []
-        for k in names:
-            if len(id_lst) < 10:
-                if getMovieID(k[1], k[0]) != '' and getMovieID(k[1], k[0]) != "ignore":
-                    id_lst.append(getMovieID(k[1], k[0]))
-        print(id_lst)
-        for j in id_lst:
-            data = getMovieData(j)
-            cur.execute("INSERT INTO Movies (imdb_id,year,title,genre,rating,popularity) VALUES (?,?,?,?,?,?)", data)
-            conn.commit()
+def createRatingsTable(cur, conn):
+    cur.execute("CREATE TABLE IF NOT EXISTS Ratings (imdb_id TEXT PRIMARY KEY, genre TEXT, rating REAL, popularity REAL)")
+    cur.execute("SELECT imdb_id FROM IDs")
+    ids = cur.fetchall()
+    print(ids)
+    for i in ids:
+        data = getMovieData(i[0])
+        cur.execute("INSERT INTO Ratings (imdb_id,genre,rating,popularity) VALUES (?,?,?,?)", data)
+    conn.commit()
     pass
 
 
 cur, conn = setUpDatabase('movie_database.db')
-createMoviesTable(cur, conn)
+createRatingsTable(cur, conn)
