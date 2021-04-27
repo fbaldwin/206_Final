@@ -141,5 +141,35 @@ def createRatingsTable(cur, conn):
     pass
 
 
+def getAverageRating(year, cur, conn):
+    cur.execute("SELECT IDs.imdb_id FROM IDs JOIN Movies ON IDs.title = Movies.title WHERE year = ?", (year,))
+    ids = cur.fetchall()
+    ratings = []
+    total = 0
+    for i in ids:
+        cur.execute("SELECT rating FROM Ratings WHERE imdb_id = ?", (i[0],))
+        rate = cur.fetchone()
+        total += rate[0]
+        ratings.append(rate[0])
+    average = total / len(ratings)
+    return average
+
+
+def getAveragePopularity(year, cur, conn):
+    cur.execute("SELECT IDs.imdb_id FROM IDs JOIN Movies ON IDs.title = Movies.title WHERE year = ?", (year,))
+    ids = cur.fetchall()
+    ratings = []
+    total = 0
+    for i in ids:
+        cur.execute("SELECT popularity FROM Ratings WHERE imdb_id = ?", (i[0],))
+        rate = cur.fetchone()
+        total += rate[0]
+        ratings.append(rate[0])
+    average = total / len(ratings)
+    return average
+
+    
+
+
 cur, conn = setUpDatabase('movie_database.db')
-createRatingsTable(cur, conn)
+print(getAveragePopularity(2019, cur, conn))
