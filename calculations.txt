@@ -1,0 +1,42 @@
+The average IMDB rating of movies in the database from the year 2000 is 7.15
+The average popularity of movies in the database from the year 2000 is 16.2475
+The average IMDB rating of movies in the database from the year 2001 is 7.08
+The average popularity of movies in the database from the year 2001 is 14.794599999999997
+The average IMDB rating of movies in the database from the year 2002 is 7.24
+The average popularity of movies in the database from the year 2002 is 19.004300000000004
+The average IMDB rating of movies in the database from the year 2003 is 7.659999999999999
+The average popularity of movies in the database from the year 2003 is 21.8676
+The average IMDB rating of movies in the database from the year 2004 is 7.2700000000000005
+The average popularity of movies in the database from the year 2004 is 17.3901
+The average IMDB rating of movies in the database from the year 2005 is 7.140000000000001
+The average popularity of movies in the database from the year 2005 is 17.1646
+The average IMDB rating of movies in the database from the year 2006 is 7.18
+The average popularity of movies in the database from the year 2006 is 22.157300000000003
+The average IMDB rating of movies in the database from the year 2007 is 7.220000000000001
+The average popularity of movies in the database from the year 2007 is 13.532000000000002
+The average IMDB rating of movies in the database from the year 2008 is 7.330000000000001
+The average popularity of movies in the database from the year 2008 is 13.820000000000002
+The average IMDB rating of movies in the database from the year 2009 is 7.11111111111111
+The average popularity of movies in the database from the year 2009 is 35.681111111111115
+The average IMDB rating of movies in the database from the year 2010 is 7.219999999999999
+The average popularity of movies in the database from the year 2010 is 27.442200000000003
+The average IMDB rating of movies in the database from the year 2011 is 7.18
+The average popularity of movies in the database from the year 2011 is 16.743900000000004
+The average IMDB rating of movies in the database from the year 2012 is 7.2
+The average popularity of movies in the database from the year 2012 is 25.016399999999997
+The average IMDB rating of movies in the database from the year 2013 is 6.9799999999999995
+The average popularity of movies in the database from the year 2013 is 24.217899999999997
+The average IMDB rating of movies in the database from the year 2014 is 7.5
+The average popularity of movies in the database from the year 2014 is 31.940299999999997
+The average IMDB rating of movies in the database from the year 2015 is 7.109999999999999
+The average popularity of movies in the database from the year 2015 is 25.585099999999997
+The average IMDB rating of movies in the database from the year 2016 is 6.959999999999999
+The average popularity of movies in the database from the year 2016 is 32.872700000000016
+The average IMDB rating of movies in the database from the year 2017 is 7.4799999999999995
+The average popularity of movies in the database from the year 2017 is 36.461
+The average IMDB rating of movies in the database from the year 2018 is 7.420000000000002
+The average popularity of movies in the database from the year 2018 is 48.44370000000001
+The average IMDB rating of movies in the database from the year 2019 is 7.2
+The average popularity of movies in the database from the year 2019 is 90.06309999999999
+The average IMDB rating of movies in the database from the year 2020 is 7.454203
+The average popularity of movies in the database from the year 2020 is 78.0585
